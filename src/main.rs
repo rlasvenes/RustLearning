@@ -3,6 +3,11 @@ use std::fmt::{Display, format, Formatter};
 use colored::Colorize;
 use std::mem;
 use std::ops::Range;
+use std::fs::File;
+use std::io::prelude::*;
+use core::str::Split;
+use std::alloc::System;
+use std::path::Path;
 
 #[derive(Debug)]
 struct Matrix(f32, f32, f32, f32);
@@ -191,8 +196,26 @@ fn exercises_with_structures() {
     println!("Rectangle {}", rect);
 }
 
+fn advent_of_code() {
+    let path = Path::new("Advent_of_code/day1/puzzle.txt");
+    let display = path.display();
+
+    let mut file = match File::open(&path) {
+        Err(why) => panic!("couldn't open {}: {}", display, why),
+        Ok(file) => file,
+    };
+
+    let mut s = String::new();
+    let _ = file.read_to_string(&mut s);
+    let mut groups = s.split('\r').collect::<Vec<_>>();
+
+
+    println!("groups size is {}", groups.clone().len());
+}
+
 fn main() {
-    basic_exercices_with_types_and_formats();
-    exercices_with_array();
-    exercises_with_structures();
+    //basic_exercices_with_types_and_formats();
+    //exercices_with_array();
+    //exercises_with_structures();
+    advent_of_code();
 }
